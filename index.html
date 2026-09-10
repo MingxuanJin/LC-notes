@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>LC-notes · 计算语言学与 LLM 学习笔记</title>
+<meta name="description" content="Advanced Computational Linguistics and LLM —— 7 张可交互思维导图笔记" />
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --ink: #1d1d1f;
+    --muted: #6b7280;
+    --line: #e5e7eb;
+    --accent: #4f46e5;
+    --accent-soft: #eef2ff;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+
+  .hero {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 55%, #2563eb 100%);
+    color: #fff;
+    padding: 48px 24px 40px;
+  }
+  .hero-inner { max-width: 1080px; margin: 0 auto; }
+  .hero h1 { margin: 0 0 8px; font-size: 30px; letter-spacing: -0.02em; }
+  .hero p { margin: 0; opacity: 0.9; font-size: 15px; max-width: 720px; }
+  .hero .meta { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .pill {
+    display: inline-block; font-size: 12px; padding: 4px 10px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.28);
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 28px 24px 64px; }
+
+  .toolbar {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(246, 247, 249, 0.9);
+    backdrop-filter: saturate(180%) blur(10px);
+    -webkit-backdrop-filter: saturate(180%) blur(10px);
+    padding: 14px 0; margin-bottom: 6px;
+  }
+  .search {
+    width: 100%; padding: 12px 16px; font-size: 15px; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 999px; background: var(--card);
+    outline: none; transition: border-color .15s, box-shadow .15s;
+  }
+  .search:focus { border-color: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+  .hint { margin: 10px 2px 0; font-size: 12.5px; color: var(--muted); }
+  kbd {
+    font: inherit; font-size: 11.5px; padding: 1px 5px; border-radius: 5px;
+    border: 1px solid var(--line); background: #fff; color: var(--muted);
+  }
+
+  .grid {
+    display: grid; gap: 16px; margin-top: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+  .card {
+    display: flex; flex-direction: column;
+    background: var(--card); border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 20px; text-decoration: none; color: inherit;
+    transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(17, 24, 39, .10); border-color: #d8dbe3; }
+  .card-top { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .num {
+    flex: none; width: 38px; height: 38px; border-radius: 11px;
+    display: grid; place-items: center; font-weight: 700; font-size: 14px;
+    color: var(--accent); background: var(--accent-soft);
+  }
+  .card h2 { margin: 0; font-size: 17px; letter-spacing: -0.01em; }
+  .card h2 small { display: block; font-weight: 500; font-size: 12.5px; color: var(--muted); letter-spacing: 0; }
+  .card p { margin: 0 0 14px; font-size: 13.5px; color: #4b5563; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  .tag {
+    font-size: 11.5px; padding: 3px 8px; border-radius: 6px;
+    background: #f3f4f6; color: #4b5563; border: 1px solid #eceef2;
+  }
+  .open { margin-top: 16px; font-size: 13.5px; font-weight: 600; color: var(--accent); }
+  .open::after { content: " →"; }
+
+  .empty { padding: 48px 0; text-align: center; color: var(--muted); display: none; }
+
+  footer {
+    max-width: 1080px; margin: 0 auto; padding: 0 24px 56px;
+    color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); padding-top: 20px;
+  }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+  @media (max-width: 560px) { .hero h1 { font-size: 24px; } }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>LC-notes</h1>
+    <p>Advanced Computational Linguistics 与 LLM 的学习笔记 —— 7 张可交互思维导图。点击卡片打开，按小圆点即可折叠 / 展开节点。</p>
+    <div class="meta">
+      <span class="pill">Advanced CL &amp; LLM</span>
+      <span class="pill" id="count-pill">7 份笔记</span>
+      <span class="pill">KaTeX 公式</span>
+      <span class="pill">可折叠思维导图</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="toolbar">
+    <label for="q" class="sr-only" style="position:absolute;left:-9999px">搜索笔记</label>
+    <input id="q" class="search" type="search" placeholder="搜索笔记：输入 wsd、embedding、sparql、共指…" autocomplete="off" />
+    <div class="hint">提示：按 <kbd>/</kbd> 快速聚焦搜索框，<kbd>Esc</kbd> 清空。</div>
+  </div>
+
+  <section id="grid" class="grid" aria-label="笔记目录"></section>
+  <div id="empty" class="empty">没有匹配的笔记，换个关键词试试。</div>
+
+  <noscript>
+    <ul>
+      <li><a href="advanced-cl-and-llm/01-wsd.html">01 · WSD — 词义消歧</a></li>
+      <li><a href="advanced-cl-and-llm/02-embeddings.html">02 · Embeddings — 词表示与 LLM 基础</a></li>
+      <li><a href="advanced-cl-and-llm/03-distributional-semantics.html">03 · DS — 分布语义学</a></li>
+      <li><a href="advanced-cl-and-llm/04-glossary.html">04 · Glossary — 术语表</a></li>
+      <li><a href="advanced-cl-and-llm/05-anaphora-coreference.html">05 · AR &amp; CR — 回指与共指消解</a></li>
+      <li><a href="advanced-cl-and-llm/06-ner.html">06 · NER — 命名实体识别</a></li>
+      <li><a href="advanced-cl-and-llm/07-llod.html">07 · LLOD — 语言关联开放数据</a></li>
+    </ul>
+  </noscript>
+</main>
+
+<footer>
+  <p>
+    仓库：<a href="https://github.com/MingxuanJin/LC-notes">github.com/MingxuanJin/LC-notes</a>
+    · 说明与目录见 <a href="https://github.com/MingxuanJin/LC-notes/blob/main/README.md">README.md</a>
+  </p>
+  <p>笔记为个人学习整理，思维导图由工具导出为静态 HTML；折叠 / 展开交互为注入的轻量脚本。</p>
+</footer>
+
+<script>
+(function () {
+  var DIR = "advanced-cl-and-llm/";
+  var NOTES = [
+    { n: "01", file: "01-wsd.html", en: "WSD", zh: "Word Sense Disambiguation · 词义消歧",
+      desc: "从歧义谈起：有监督 / 半监督 / 无监督与知识驱动方法，以及评测框架与真实应用。",
+      tags: ["Lesk", "Bootstrapping", "WordNet", "Senseval", "选择偏好"] },
+    { n: "02", file: "02-embeddings.html", en: "Embeddings", zh: "词表示与 LLM 基础",
+      desc: "从显式到隐式的范式转移，VSM、图嵌入与义项嵌入，直到 Transformer、预训练与提示工程。",
+      tags: ["word2vec", "BERT vs GPT", "Self-attention", "Prompt", "句嵌入"] },
+    { n: "03", file: "03-distributional-semantics.html", en: "DS", zh: "Distributional Semantics · 分布语义学",
+      desc: "分布假设与四大理论支柱，共现矩阵、PMI/PPMI 加权，DSM 分类与神经网络模型及评测。",
+      tags: ["Harris", "Firth", "PMI", "LSA", "余弦相似度"] },
+    { n: "04", file: "04-glossary.html", en: "Glossary", zh: "术语表",
+      desc: "从算法基础到 AI 分类、机器学习范式、向量语义、LLM 架构、对齐安全与三大流派的全景术语。",
+      tags: ["AGI", "Transformer", "Fine-tuning", "Alignment", "Neuro-symbolic"] },
+    { n: "05", file: "05-anaphora-coreference.html", en: "AR & CR", zh: "回指与共指消解",
+      desc: "回指与共指的区别、指代类型（零回指 / 指示词 / 后指 / 桥接）、消解约束、数据集与工具。",
+      tags: ["Coreference", "Zero anaphora", "Cataphora", "MUC", "OntoNotes"] },
+    { n: "06", file: "06-ner.html", en: "NER", zh: "Named Entity Recognition · 命名实体识别",
+      desc: "命名实体的定义与类型、三类学习方法、特征设计，以及 MUC 评测指标与常见错误类型。",
+      tags: ["Entity types", "Supervised", "Features", "MUC", "Error analysis"] },
+    { n: "07", file: "07-llod.html", en: "LLOD", zh: "Linguistic Linked Open Data",
+      desc: "FAIR 原则、Linked Data 与语义网、RDF/RDFS、Ontolex-lemon、OLiA、发布生命周期与 SPARQL。",
+      tags: ["FAIR", "RDF", "Ontolex", "OLiA", "SPARQL"] }
+  ];
+
+  var grid = document.getElementById("grid");
+  var empty = document.getElementById("empty");
+  var input = document.getElementById("q");
+
+  NOTES.forEach(function (item) {
+    var a = document.createElement("a");
+    a.className = "card";
+    a.href = DIR + item.file;
+    a.target = "_blank";
+    a.rel = "noopener";
+    a.dataset.search = [item.n, item.en, item.zh, item.desc].concat(item.tags).join(" ").toLowerCase();
+
+    var top = document.createElement("div");
+    top.className = "card-top";
+    var num = document.createElement("div");
+    num.className = "num";
+    num.textContent = item.n;
+    var h2 = document.createElement("h2");
+    h2.textContent = item.en;
+    var small = document.createElement("small");
+    small.textContent = item.zh;
+    h2.appendChild(small);
+    top.appendChild(num);
+    top.appendChild(h2);
+
+    var p = document.createElement("p");
+    p.textContent = item.desc;
+
+    var tags = document.createElement("div");
+    tags.className = "tags";
+    item.tags.forEach(function (t) {
+      var s = document.createElement("span");
+      s.className = "tag";
+      s.textContent = t;
+      tags.appendChild(s);
+    });
+
+    var open = document.createElement("div");
+    open.className = "open";
+    open.textContent = "打开思维导图";
+
+    a.appendChild(top);
+    a.appendChild(p);
+    a.appendChild(tags);
+    a.appendChild(open);
+    grid.appendChild(a);
+  });
+
+  var cards = Array.prototype.slice.call(grid.children);
+
+  function applyFilter() {
+    var q = input.value.trim().toLowerCase();
+    var shown = 0;
+    cards.forEach(function (c) {
+      var hit = !q || c.dataset.search.indexOf(q) !== -1;
+      c.style.display = hit ? "" : "none";
+      if (hit) shown++;
+    });
+    empty.style.display = shown ? "none" : "block";
+    document.getElementById("count-pill").textContent = shown + " / " + cards.length + " 份笔记";
+  }
+
+  input.addEventListener("input", applyFilter);
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "/" && document.activeElement !== input) {
+      e.preventDefault();
+      input.focus();
+    } else if (e.key === "Escape" && document.activeElement === input) {
+      input.value = "";
+      applyFilter();
+    }
+  });
+
+  applyFilter();
+})();
+</script>
+</body>
+</html>

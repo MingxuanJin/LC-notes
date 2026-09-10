@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Editors / IDE
+.idea/
+.vscode/
+*.swp
+
+# Python（本地起 http.server 时的缓存）
+__pycache__/
+*.py[cod]
